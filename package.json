@@ -1,26 +1,39 @@
 {
-  "name": "page_terminal_accessor",
-  "version": "1.0.0",
-  "description": "Electron tests for independant desktop web app",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron --trace-warnings .",
-    "start:autoupdate": "npx electronmon --trace-warnings .",
-    "build": "electron-builder"
+	"name": "key_access_test",
+	"version": "1.0.0",
+	"description": "Electron tests for independant desktop web app",
+  "author": {
+    "name": "Your Name",
+    "email": "lel@sos.com"
+	},
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "electron-forge start",
+		"start:autoupdate": "npx electronmon --trace-warnings .",
+		"build": "electron-builder"
+	},
+  "build": {
+    "appId": "key_access_test",
+    "productName": "key_access_test",
+    "linux": {
+      "target": ["deb"],
+      "category": "Utility"
+    }
   },
-  "keywords": [
-    "electron",
-    "test",
-    "webapp"
-  ],
-  "author": "leonardo",
-  "license": "ISC",
-  "dependencies": {
-    "fs": "^0.0.1-security"
-  },
-  "devDependencies": {
-    "electron": "^37.2.5",
-    "electron-builder": "^26.0.12"
-  }
+	"keywords": [
+		"electron",
+		"test",
+		"webapp"
+	],
+	"license": "ISC",
+	"dependencies": {
+	},
+	"devDependencies": {
+		"electron-builder": "^26.0.12",
+		"electron-squirrel-startup": "^1.0.1",
+		"fs": "^0.0.1-security",
+		"rpmbuild": "^0.0.23",
+		"electron": "^37.2.5"
+	}
 }

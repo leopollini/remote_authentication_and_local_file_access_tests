@@ -1,0 +1,11 @@
+directories:
+  output: dist
+  buildResources: build
+appId: key_access_test
+productName: key_access_test
+linux:
+  target:
+    - deb
+  category: Utility
+files: []
+electronVersion: 37.2.5

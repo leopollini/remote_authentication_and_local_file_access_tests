@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<html>
+    <head>
+        <title>PHP Testen</title>
+    </head>
+    <body>
+        hkdsjfhasfatbfwqgefjklm
+        <br>
+        <br>
+        <button id="readfile">read file please</button>
+    </body>
+    <script>
+        $(function () {
+            $("#readfile").click(async function () {
+                alert(JSON.stringify(await window.electronAPI.getLocalKey()));
+            });
+        });
+    </script>
+</html>

@@ -1,33 +1,52 @@
 
 const path = require('path');
-const {app, BrowserWindow, globalShortcut } = require('electron');
-const Terminal = require("./Terminal");
+const {app, BrowserWindow, globalShortcut, WebContentsView, BaseWindow } = require('electron');
 const url = require('url');
+const FileAccessSetup = require('./electronAPIs.js');
 
 const PAGE_URL = url.format({
-        pathname: path.join("/localhost", "file_access_tests", "thepage.php"),
-        protocol: 'http'
-    });
-
-var term = new Terminal();
+		pathname: path.join(__dirname, "index.html"),
+		// pathname: path.join("reception.parchotels.it"),
+		// protocol: 'http'
+		protocol: 'file'
+	});
 
 async function createMainWindow()
 {
-    const mainWindow = new BrowserWindow({
-        title: "Electron",
-        width: 1920,
-        height: 1080
+	// new FileAccessSetup();
+	const mainWindow = new BaseWindow({
+		tabbingIdentifier: "myTabs",
+		title: "Electron",
+		width: 1920,
+		height: 1080
+	});
+	const mainTab = new WebContentsView({
+		webPreferences: {
+			preload: path.join(__dirname, 'preload.js'), // Secure bridge
+			contextIsolation: true,
+			nodeIntegration: false
+		}});
+	mainWindow.contentView.addChildView(mainTab);
+
+    mainWindow.on('resize', () => {
+        mainTab.setBounds({x: 0, y: 0  , height: mainWindow.getContentBounds().height, width: mainWindow.getContentBounds().width});
     });
+    mainTab.setBounds({x: 0, y: 0  , height: mainWindow.getContentBounds().height, width: mainWindow.getContentBounds().width});
 
-    const REQ_URI = PAGE_URL + "?" + (await term.create_qs());
+	mainTab.webContents.loadURL(PAGE_URL);
 
-    console.log("###Uri here: " + REQ_URI);
+	
+	// globalShortcut.register('f12', () => {
+	mainTab.webContents.toggleDevTools();
 
-    mainWindow.loadURL(REQ_URI);
-    
-    globalShortcut.register('f12', () => {
-        mainWindow.webContents.openDevTools();
-    });
+	// });
+}
+
+function createTab(url) {
+  const view = new WebContentsView();
+  view.webContents.loadURL(url);
+  return view;
 }
 
 app.whenReady().then(createMainWindow);
+
