@@ -24,7 +24,8 @@ async function createMainWindow()
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'), // Secure bridge
 			contextIsolation: true,
-			nodeIntegration: false
+			nodeIntegration: false,
+		    experimentalFeatures: true
 		}});
 	mainWindow.contentView.addChildView(mainTab);
 

@@ -1,8 +1,8 @@
 version: 1.0.0
 files:
   - url: key_access_test_1.0.0_amd64.deb
-    sha512: dUaOPsHuWLvTRJxKHM2Bbn88Oeh2moELr5AMT7IC2qRJ+qIrXbpGzLKwM+8siHoKVNSXGUTU6czeULnUYEP58g==
-    size: 80363376
+    sha512: 29f7KiHej3OMwYgr1cDFiDBzVxZGEJDY2PJYpwz0JRsn/TFp+wU/3RYA70qx45Q+3+54DfRhm9KBE64W42BBdw==
+    size: 80322084
 path: key_access_test_1.0.0_amd64.deb
-sha512: dUaOPsHuWLvTRJxKHM2Bbn88Oeh2moELr5AMT7IC2qRJ+qIrXbpGzLKwM+8siHoKVNSXGUTU6czeULnUYEP58g==
-releaseDate: '2025-08-11T14:56:22.566Z'
+sha512: 29f7KiHej3OMwYgr1cDFiDBzVxZGEJDY2PJYpwz0JRsn/TFp+wU/3RYA70qx45Q+3+54DfRhm9KBE64W42BBdw==
+releaseDate: '2025-08-12T08:01:53.953Z'

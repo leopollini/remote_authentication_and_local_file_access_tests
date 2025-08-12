@@ -10,12 +10,20 @@
         <br>
         <br>
         <button id="readfile">read file please</button>
+        <text style="display:none" id="loltext">this shows up on pointerdown event</text>
+        <br>
+        <text style="display:none" id="loltext2">this shows up on click event</text>
     </body>
     <script>
         $(function () {
             $("#readfile").click(async function () {
-                alert(JSON.stringify(await window.electronAPI.getLocalKey()));
+                // alert(JSON.stringify(await window.electronAPI.getLocalKey()));
+                $("#loltext2").show();
             });
+
+            $("#readfile").on('pointerdown', function () {
+                $("#loltext").show();
+            })
         });
     </script>
 </html>

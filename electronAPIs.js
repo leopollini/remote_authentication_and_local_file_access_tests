@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron');
+const { app, ipcMain } = require('electron');
 const fs = require('fs');
 
 var KEYS_PATH = "local_key.json";
@@ -10,7 +10,9 @@ class FileAccessSetup
 		ipcMain.handle('select-file', async () => await this.selectFile());
 		ipcMain.handle('read-file', async (event, path) => await this.readFile(path));
 		ipcMain.handle('get-key', async () => await this.getLocalKey());
-	
+		
+		app.commandLine.appendSwitch('touch-events', 'enabled');
+		app.commandLine.appendSwitch('enable-pointer-events');
 	}
 	async selectFile()
 	{
