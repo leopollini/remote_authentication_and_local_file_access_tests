@@ -5,7 +5,7 @@ var KEYS_PATH = "local_key.json";
 
 class FileAccessSetup
 {
-	constructor()
+	constructor(window, tab)
 	{
 		ipcMain.handle('select-file', async () => await this.selectFile());
 		ipcMain.handle('read-file', async (event, path) => await this.readFile(path));
@@ -41,7 +41,5 @@ class FileAccessSetup
 	}
 
 }
-
-new FileAccessSetup();
 
 module.exports = FileAccessSetup;

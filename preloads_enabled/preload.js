@@ -1,38 +1,27 @@
-const { contextBridge, ipcRenderer } = require('electron');
 const fs = require('fs');
 const path = require('path');
 
-contextBridge.exposeInMainWorld('electronAPI', {
-	selectFile: () => ipcRenderer.invoke('select-file'),
-	readFile: (filePath) => ipcRenderer.invoke('read-file', filePath),
-	getLocalKey: () => ipcRenderer.invoke('get-key')
-});
+const LOAD_DIR = __dirname;
 
-
-
+// Loads all standalone modules
 fs.readdirSync(__dirname).forEach(file => {
-  if (file !== 'preload.js' && file != 'utils.js' && file.endsWith('.js')) {
+  if (file !== 'preload.js' && file !== 'utils.js' && file[0] !== '.' && file.endsWith('.js')) {
+	console.log("loading ", file);
     require(path.join(__dirname, file));
   }
 });
 
-// utils
-function createMouseEvent(name, pos, target, bt = 0)
-{
-	return new MouseEvent(name, {
-		clientX: pos.x,
-		clientY: pos.y,
-		bubbles: true,
-		cancelable: true,
-		view: window,
-		button: bt,
-		detail: 1,
-		target: lastTouchedObject
-	});
-}
-
-// utils
-function sendMouseEvent(name, pos, target, bt = 0)
-{
-	target.dispatchEvent(createMouseEvent(name, pos, target, bt));
-}
+// Loads all nested modules
+fs.readdirSync(LOAD_DIR).forEach(function (dir) {
+	const fullpath = path.join(LOAD_DIR, dir);
+	const stat = fs.statSync(fullpath);
+	if (stat.isDirectory())
+	{
+		fs.readdirSync(fullpath).forEach(function (file) {
+			console.log("loading ", file);
+			if (file[0] !== '.' && file.endsWith('.js')) {
+				require(path.join(fullpath, file));
+			}
+		});
+	}
+});

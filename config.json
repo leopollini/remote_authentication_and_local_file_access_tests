@@ -9,13 +9,24 @@
 
     "main_scripts_dir": "modules_enabled",
     "preload_scripts_dir": "preload_enabled",
-    "scripts_lib_dir": "disabled_scripts",
+    "scripts_lib_dir": "modules_disabled",
     "electron_package": "package.json",
+    "log":
+    {
+        "log_level": "WARNING",
+        "log_file": "log.log",
+        "actions":
+        {
+            "theese are just some examples": "I cannot use comments in json :(",
+            "send_mail": {},
+            "close_terminal": {}
+        }
+    },
 
     "keyboard_config":
     {
         "enabled": true,
-        "whitelist": [],
+        "whitelist": false,
         "blacklist": [],
         "shortcuts":
         {
@@ -23,8 +34,8 @@
             "main_scripts": []
         }
     },
-    "pointer_config": true,
-    "touchscreen_config":
+    "touchscreen_config": false,
+    "mouse_config": 
     {
         "enabled": true,
         "remap_to_pointeraction": true,
@@ -35,7 +46,7 @@
                 "enabled": true,
                 "doubletouch_radius": 20,
                 "doubletouch_max_delay": 0.5,
-                "preload_scripts": ["double-click/double-click.js"],
+                "preload_scripts": ["double-touch/double-touch.js"],
                 "main_scripts": [],
                 "events": {"dblclick": {}}
             },
@@ -43,7 +54,7 @@
             {
                 "enabled": true,
                 "time_delay": 0.5,
-                "preload_scripts": ["long-press-rightclick.js"],
+                "preload_scripts": ["long-press/long-press.js"],
                 "main_scripts": [],
                 "events": {"pointerdown": {}, "contextmenu": {}}
             }
@@ -66,11 +77,19 @@
         "hidden": false,
         "main_scripts": []
     },
+    "only_one_webpage": true,
+    "allow_navigation": true,
 
+    "electron-api":
+    {
+        "enabled": true,
+        "preload_scripts": ["electronAPIs-preload.js"],
+        "main_scripts": ["electronAPIs.js"]
+    },
     "extra_scripts":
     {
         "preload_scripts": [],
-        "main_scripts": []
+        "main_scripts": ["window-events"]
     },
     "startup_actions": []
 }

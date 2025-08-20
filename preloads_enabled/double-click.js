@@ -14,7 +14,11 @@ document.addEventListener('pointerdown', function (e, pos) {
 // radial double-click signal forward
 ipcRenderer.on('double-click2', function (e, pos)
 {
-	const dblClickEvent = new createMouseEvent('dblclick', pos, lastTouchedObject);
+	var dbc_event = e;
+	dbc_event.target = lastTouchedObject;
+	dbc_event.clientX = pos.x;
+	dbc_event.clientY = pos.x;
+	const dblClickEvent = new createMouseEvent('dblclick', dbc_event);
 	// console.log("###lastItem:", lastTouchedObject);
 	if (lastTouchedObject && Date.now() < touchTime + 1000)
 		lastTouchedObject.dispatchEvent(dblClickEvent);

@@ -1,22 +1,13 @@
 // utils
-function createMouseEvent(name, pos, target, bt = 0)
+function createMouseEvent(name, e)
 {
-	return new MouseEvent(name, {
-		clientX: pos.x,
-		clientY: pos.y,
-		bubbles: true,
-		cancelable: true,
-		view: window,
-		button: bt,
-		detail: 1,
-		target: target
-	});
+	return new MouseEvent(name, e);
 }
 
 // utils
-function sendMouseEvent(name, pos, target, bt = 0)
+function sendMouseEvent(name, e)
 {
-	target.dispatchEvent(createMouseEvent(name, pos, target, bt));
+	e.target.dispatchEvent(createMouseEvent(name, e));
 }
 
 module.exports = { createMouseEvent, sendMouseEvent };

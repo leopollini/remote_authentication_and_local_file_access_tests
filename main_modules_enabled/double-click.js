@@ -4,8 +4,8 @@ var DOUBLE_CLICK_DELAY = 1000; // in ms
 var DOUBLE_CLICK_RADIUS_SQR = 2500; // square of radius in pixels
 var BLOCK_KEYBOARD = false;
 
-// radial double-press
-class setupCustomMouseEvents
+// radial double-click
+class DoubleclickSetup
 {
     lstLeftPress = 0;
     lstLeftPos = {x: 0, y:0};
@@ -13,10 +13,11 @@ class setupCustomMouseEvents
     lstRightPos = {x:0, y:0};
     tab;
 
-    constructor(tab, block_keyboard = BLOCK_KEYBOARD)
+    constructor(window, tab)
     {
+        // window = null;
         this.tab = tab;
-        console.log("setting up");
+        console.log("setting up: ", window, tab);
         this.tab.webContents.on('input-event', (event, input) => {
             if (input.type != 'mouseMove')
                 console.log("sending an", input.type);
@@ -50,7 +51,7 @@ class setupCustomMouseEvents
                 //  break ;
             }
         });
-        if (block_keyboard)
+        if (BLOCK_KEYBOARD)
         {
             tab.webContents.on('before-input-event', (event, input) => {
                 if (input.type === 'char' || input.type === 'rawKeyDown' || input.type === 'keyUp')
@@ -58,7 +59,8 @@ class setupCustomMouseEvents
             });
         }
     }
-    looseDoubleClickCheck(input, event)
+    
+    async looseDoubleClickCheck(input, event)
     {
         if (Date.now() > this.lstLeftPress + DOUBLE_CLICK_DELAY)
             return ;
@@ -75,4 +77,4 @@ class setupCustomMouseEvents
     }
 }
 
-module.exports = setupCustomMouseEvents;
+module.exports = DoubleclickSetup;
