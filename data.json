@@ -1,0 +1,10 @@
+{
+    "webpages":
+    [
+        {   
+            "address": "index.html",
+            "protocol": "file",
+            "is_main_page": true
+        }
+    ]
+}

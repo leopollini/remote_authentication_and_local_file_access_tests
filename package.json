@@ -2,9 +2,9 @@
 	"name": "key_access_test",
 	"version": "1.0.0",
 	"description": "Electron tests for independant desktop web app",
-  "author": {
-    "name": "Your Name",
-    "email": "lel@sos.com"
+	"author": {
+		"name": "Your Name",
+		"email": "lel@sos.com"
 	},
 	"main": "main.js",
 	"scripts": {
@@ -13,27 +13,27 @@
 		"start:autoupdate": "npx electronmon --trace-warnings .",
 		"build": "electron-builder"
 	},
-  "build": {
-    "appId": "key_access_test",
-    "productName": "key_access_test",
-    "linux": {
-      "target": ["deb"],
-      "category": "Utility"
-    }
-  },
+	"build": {
+		"appId": "key_access_test",
+		"productName": "key_access_test",
+		"linux": {
+			"target": [
+				"deb"
+			],
+			"category": "Utility"
+		}
+	},
 	"keywords": [
 		"electron",
 		"test",
 		"webapp"
 	],
 	"license": "ISC",
-	"dependencies": {
-	},
 	"devDependencies": {
+		"electron": "^37.2.5",
 		"electron-builder": "^26.0.12",
 		"electron-squirrel-startup": "^1.0.1",
 		"fs": "^0.0.1-security",
-		"rpmbuild": "^0.0.23",
-		"electron": "^37.2.5"
+		"rpmbuild": "^0.0.23"
 	}
 }

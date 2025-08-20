@@ -12,7 +12,9 @@
         <button id="readfile">read file please</button>
         <text style="display:none" id="loltext">this shows up on pointerdown event</text>
         <br>
-        <text style="display:none" id="loltext2">this shows up on click event</text>
+        <text style="display:none" id="loltext2">this shows up on doubleclick event</text>
+        <br>
+        <text style="display:none" id="loltext3">this shows up on rightclick event</text>
     </body>
     <script>
         $(function () {
@@ -23,6 +25,10 @@
 
             $("#readfile").on('pointerdown', function () {
                 $("#loltext").show( );
+            })
+
+            $("#readfile").on('contextmenu', function (e) {
+                $("#loltext3").show( );
             })
 
             $(document).on('pointerdown', function () {console.log("pointer down.");})

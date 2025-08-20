@@ -1,10 +1,76 @@
 {
-    "keyboard_active": true,
-    "pointer_active": true,
-    "touchscreen_active":
+    "author":
+    {
+        "name": "Leonardo Pollini",
+        "email": "leopollinik@gmail.com"
+    },
+    "version": "0.0.1",
+    "autoupdate": false,
+
+    "main_scripts_dir": "modules_enabled",
+    "preload_scripts_dir": "preload_enabled",
+    "scripts_lib_dir": "disabled_scripts",
+    "electron_package": "package.json",
+
+    "keyboard_config":
+    {
+        "enabled": true,
+        "whitelist": [],
+        "blacklist": [],
+        "shortcuts":
         {
-            "active": true,
-            "pointer_remap": true,
-            ""
+            "preload_scripts": [],
+            "main_scripts": []
         }
+    },
+    "pointer_config": true,
+    "touchscreen_config":
+    {
+        "enabled": true,
+        "remap_to_pointeraction": true,
+        "actions":
+        {
+            "doubletouch":
+            {
+                "enabled": true,
+                "doubletouch_radius": 20,
+                "doubletouch_max_delay": 0.5,
+                "preload_scripts": ["double-click/double-click.js"],
+                "main_scripts": [],
+                "events": {"dblclick": {}}
+            },
+            "long_press_leftclick":
+            {
+                "enabled": true,
+                "time_delay": 0.5,
+                "preload_scripts": ["long-press-rightclick.js"],
+                "main_scripts": [],
+                "events": {"pointerdown": {}, "contextmenu": {}}
+            }
+        }
+    },
+
+    "fullscreen": true,
+    "autostart": true,
+    "autorestart": true,
+    "autoreload": false,
+    "start_script":
+    {
+        "enabled": true,
+        "scripts": []
+    },
+
+    "toolbar":
+    {
+        "enabled": false,
+        "hidden": false,
+        "main_scripts": []
+    },
+
+    "extra_scripts":
+    {
+        "preload_scripts": [],
+        "main_scripts": []
+    },
+    "startup_actions": []
 }
