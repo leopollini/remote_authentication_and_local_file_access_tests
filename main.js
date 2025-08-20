@@ -2,7 +2,9 @@
 const path = require('path');
 const {app, BrowserWindow, globalShortcut, WebContentsView, BaseWindow } = require('electron');
 const url = require('url');
-const FileAccessSetup = require('./electronAPIs.js');
+const setupCustomMouseEvents = require('./utils_modules/setupCustomMouseEvents');
+
+require('./utils_modules/electronAPIs');
 
 const PAGE_URL = url.format({
 		pathname: path.join(__dirname, "index.html"),
@@ -22,24 +24,27 @@ async function createMainWindow()
 	});
 	const mainTab = new WebContentsView({
 		webPreferences: {
-			preload: path.join(__dirname, 'preload.js'), // Secure bridge
+			preload: path.join(__dirname, 'utils_modules', 'preload.js'), // Secure bridge
 			contextIsolation: true,
 			nodeIntegration: false,
 		    experimentalFeatures: true
 		}});
+
 	mainWindow.contentView.addChildView(mainTab);
 
     mainWindow.on('resize', () => {
         mainTab.setBounds({x: 0, y: 0  , height: mainWindow.getContentBounds().height, width: mainWindow.getContentBounds().width});
     });
-    mainTab.setBounds({x: 0, y: 0  , height: mainWindow.getContentBounds().height, width: mainWindow.getContentBounds().width});
+	mainTab.setBounds({x: 0, y: 0  , height: 920, width: 780});
 
 	mainTab.webContents.loadURL(PAGE_URL);
 
 	
+	
 	// globalShortcut.register('f12', () => {
 	mainTab.webContents.toggleDevTools();
-
+		
+	new setupCustomMouseEvents(mainTab);
 	// });
 }
 
@@ -50,4 +55,3 @@ function createTab(url) {
 }
 
 app.whenReady().then(createMainWindow);
-

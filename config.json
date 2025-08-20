@@ -1,0 +1,10 @@
+{
+    "keyboard_active": true,
+    "pointer_active": true,
+    "touchscreen_active":
+        {
+            "active": true,
+            "pointer_remap": true,
+            ""
+        }
+}

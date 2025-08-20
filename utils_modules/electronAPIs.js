@@ -12,7 +12,7 @@ class FileAccessSetup
 		ipcMain.handle('get-key', async () => await this.getLocalKey());
 		
 		app.commandLine.appendSwitch('touch-events', 'enabled');
-		app.commandLine.appendSwitch('enable-pointer-events');
+		// app.commandLine.appendSwitch('enable-pointer-events');
 	}
 	async selectFile()
 	{
@@ -21,8 +21,9 @@ class FileAccessSetup
 
 	async readFile(path)
 	{
+		console.log("reading file");
 		try {
-			return fs.readFileSync(filePath, 'utf-8');
+			return fs.readFileSync(path, 'utf-8');
 		} catch (err) {
 			console.error(err);
 			return null;

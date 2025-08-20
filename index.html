@@ -16,14 +16,20 @@
     </body>
     <script>
         $(function () {
-            $("#readfile").click(async function () {
+            $("#readfile").on('dblclick', async function () {
                 // alert(JSON.stringify(await window.electronAPI.getLocalKey()));
                 $("#loltext2").show();
             });
 
             $("#readfile").on('pointerdown', function () {
-                $("#loltext").show();
+                $("#loltext").show( );
             })
+
+            $(document).on('pointerdown', function () {console.log("pointer down.");})
+            $(document).on('pointerup', function () {console.log("pointer up.");})
+            $(document).click(function () {console.log("pointer click.");})
+            $(document).on('pointermove', function () {console.log("pointer move.");})
+            $(document).on('dblclick', function () {console.log("pointer double click.");})
         });
     </script>
 </html>
