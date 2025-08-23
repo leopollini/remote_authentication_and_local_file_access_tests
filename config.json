@@ -34,29 +34,27 @@
             "main_scripts": []
         }
     },
-    "touchscreen_config": false,
-    "mouse_config": 
+    "mouse_config": true,
+    "touchscreen_config":
     {
         "enabled": true,
         "remap_to_pointeraction": true,
         "actions":
         {
-            "doubletouch":
+            "enlarged_doubleclick":
             {
                 "enabled": true,
-                "doubletouch_radius": 20,
-                "doubletouch_max_delay": 0.5,
-                "preload_scripts": ["double-touch/double-touch.js"],
-                "main_scripts": [],
-                "events": {"dblclick": {}}
+                "doubleclick_radius": 20,
+                "doubleclick_max_delay": 0.5,
+                "scripts_dir": "double-click",
+                "APIevents": {"dblclick": {}}
             },
-            "long_press_leftclick":
+            "long_press":
             {
                 "enabled": true,
                 "time_delay": 0.5,
-                "preload_scripts": ["long-press/long-press.js"],
-                "main_scripts": [],
-                "events": {"pointerdown": {}, "contextmenu": {}}
+                "scripts_dir": "long-press",
+                "APIevents": {"pointerdown": {}, "contextmenu": {}}
             }
         }
     },
@@ -83,13 +81,12 @@
     "electron-api":
     {
         "enabled": true,
-        "preload_scripts": ["electronAPIs-preload.js"],
-        "main_scripts": ["electronAPIs.js"]
+        "scripts_dir": "electronAPI"
     },
     "extra_scripts":
     {
         "preload_scripts": [],
-        "main_scripts": ["window-events"]
+        "scripts_dir": "window-events"
     },
     "startup_actions": []
 }

@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "module_name": "double-click",
+    "doubleclick_sqr_radius": 1600,
+    "doubleclick_max_delay": 500
+}

@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const { createMouseEvent } = require('./utils.js')
+const { createMouseEvent } = require('../../utils.js')
 
 var lastTouchedObject = null;
 var touchTime = 0;

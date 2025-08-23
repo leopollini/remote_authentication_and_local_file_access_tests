@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const { sendMouseEvent } = require('./utils.js')
+const { sendMouseEvent } = require('../../utils.js')
 
 const LONG_PRESS_DELAY = 500; // longpress duration in ms
 var longPressTimer = null;

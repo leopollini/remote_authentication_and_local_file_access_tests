@@ -1,10 +1,13 @@
 
 const path = require('path');
-const {app, BrowserWindow, globalShortcut, WebContentsView, BaseWindow, screen } = require('electron');
+const {app, BrowserWindow, globalShortcut, WebContentsView, BaseWindow, screen, contentTracing } = require('electron');
 const url = require('url');
-const fs = require('fs')
+const fs = require('fs');
+const Env = require('./env');
+const BaseModule = require('./modules/BaseModule');
+const { constrainedMemory } = require('process');
 
-const LOAD_DIR = path.join(__dirname, 'main_modules_enabled');
+const LOAD_DIR = path.join(__dirname, 'modules');
 const PAGE_URL = url.format({
 		pathname: path.join(__dirname, "index.html"),
 		// pathname: path.join("reception.parchotels.it"),
@@ -24,7 +27,7 @@ async function createMainWindow()
 	});
 	const mainTab = new WebContentsView({
 		webPreferences: {
-			preload: path.join(__dirname, 'preloads_enabled', 'preload.js'), // Secure bridge
+			preload: path.join(__dirname, 'preload.js'), // Secure bridge
 			contextIsolation: true,
 			nodeIntegration: false,
 		    experimentalFeatures: true,
@@ -39,35 +42,46 @@ async function createMainWindow()
 	mainTab.webContents.loadURL(PAGE_URL);
 
 
-	// Loads standalone scripts inside LOAD_DIR
-	fs.readdirSync(LOAD_DIR).forEach(file => {
-	if (file[0] !== '.' && file.endsWith('.js')) {
-		console.log("loading ", file);
-		const ModuleClass = require(path.join(LOAD_DIR, file));
-		new ModuleClass(mainWindow, mainTab);
-	}
-	});
-
-	// Loads nested scipts inside LOAD_DIR
-	fs.readdirSync(LOAD_DIR).forEach(function (dir) {
-		if (dir[0] === '.') return ;
+	// Loads all active modules preload
+	fs.readdirSync(LOAD_DIR).forEach(function (dir)
+	{
 		const fullpath = path.join(LOAD_DIR, dir);
 		const stat = fs.statSync(fullpath);
 		if (stat.isDirectory())
 		{
-			console.log("loagind ", fullpath);
-			fs.readdirSync(fullpath).forEach(function (file)
+			const main_path = path.join(fullpath, 'main');
+			const main_stat = fs.statSync(main_path);
+			if (main_stat.isDirectory())
 			{
-				if (file[0] !== '.' && file.endsWith('.js'))
+				const setup_file = path.join(main_path, 'setup.js');
+				if (fs.existsSync(setup_file))
 				{
-					console.log("loading ", file);
-					const ModuleClass = require(path.join(fullpath, file));
-					new ModuleClass(mainWindow, mainTab);
+					if (Env.DEBUG_MODE)
+						console.log("loading", dir);
+					const ModuleClass = require(setup_file);
+					const t = new BaseModule();
+					Object.assign(t, ModuleClass);
+					t.__start(mainWindow, mainTab);
+					console.log(t);
 				}
-			});
+			}
 		}
 	});
 
+
+	// class BaseLel
+	// {
+	// 	constructor(o)
+	// 	{
+	// 		console.log(o);
+	// 		Object.assign(this, o);
+	// 		console.log(this);
+	// 		this.addAsd();
+	// 	}
+	// }
+	// contents = require('./testscript');
+	// console.log(contents);
+	// new BaseLel(contents);
 
 	// globalShortcut.register('f12', () => {
 	mainTab.webContents.toggleDevTools(); // }
