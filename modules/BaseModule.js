@@ -42,7 +42,7 @@ class BaseModule
 
     log(...message)
 	{
-		if (Env.DEBUG_MODE) console.log('[ ' + chalk.green(this.module_name) + ' ]:', ...message);
+		if (Env.DEBUG_MODE) console.log('[', chalk.green(this.module_name), ']:', ...message);
 	}
 
 	setActive(active = true) {this.is_active = active;}

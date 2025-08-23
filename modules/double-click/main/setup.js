@@ -1,8 +1,7 @@
-const BaseModule = require('../../BaseModule');
 const path = require('path');
 
 // radial double-click
-class DoubleClick extends BaseModule
+class DoubleClick extends require('../../BaseModule')
 {
     CONF_FILE_PATH = path.join(__dirname, '..', 'conf.json');
     MODULE_NAME = "double-click";
@@ -57,10 +56,10 @@ class DoubleClick extends BaseModule
         if ((dx != 0 || dy != 0) && dx * dx + dy * dy < this.__conf.doubleclick_sqr_radius)
         {
             this.tab.webContents.send('double-click2', { x: input.x, y: input.y });
-            console.log("Firing!");
+            this.log("Firing!");
         }
         else
-            console.log("radius exceeded or zero");
+            this.log("radius exceeded or zero");
         this.lstLeftPress = 0;
     }
 }

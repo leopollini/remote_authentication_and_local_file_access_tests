@@ -13,6 +13,8 @@ const PAGE_URL = url.format({
 		protocol: 'file'
 	});
 
+var enabled_modules = [];
+
 async function createMainWindow()
 {
 	// new FileAccessSetup();
@@ -56,8 +58,17 @@ async function createMainWindow()
 				{
 					if (Env.DEBUG_MODE)
 						console.log("loading", dir);
-					const ModuleClass = require(setup_file);
-					(new ModuleClass()).__start(mainWindow, mainTab);
+					try
+					{
+						const ModuleClass = require(setup_file);
+						const t = new ModuleClass()
+						enabled_modules.push(t);
+						t.__start(mainWindow, mainTab);
+					}
+					catch (e)
+					{
+						console.log("Module not loaded:", e.message);
+					}
 				}
 			}
 		}
@@ -67,7 +78,21 @@ async function createMainWindow()
 	// globalShortcut.register('f12', () => {
 	mainTab.webContents.toggleDevTools(); // }
 
+	if (Env.DEBUG_MODE)
+	{
+		console.log('CHECKING ACTIVE MODULES:');
+		checkActiveModules();
+	}
+
 	// mainWindow.maximize();
+}
+
+// Only main-side!!! Check app console for preload fails
+function checkActiveModules()
+{
+	enabled_modules.forEach(function (e) {
+		e.log(e.isActive());
+	});
 }
 
 app.whenReady().then(createMainWindow);

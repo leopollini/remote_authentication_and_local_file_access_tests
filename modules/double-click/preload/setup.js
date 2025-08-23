@@ -5,7 +5,7 @@ var lastTouchedObject = null;
 var touchTime = 0;
 	
 // detect touched item for events sent from main
-document.addEventListener('pointerdown', function (e, pos) {
+document.addEventListener('pointerdown', function (e) {
 	lastTouchedObject = e.target;
 	touchTime = Date.now();
 	// console.log("ASASD");

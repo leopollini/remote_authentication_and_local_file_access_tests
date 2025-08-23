@@ -1,11 +1,18 @@
 const { app, ipcMain } = require('electron');
 const fs = require('fs');
+const path = require('path')
 
-var KEYS_PATH = "local_key.json";
-
-class FileAccessSetup
+// Sample Module. Plase copy-paste this file into new module's main folder
+class ElectronAPI extends require('../../BaseModule')
 {
-	constructor(window, tab)
+    CONF_FILE_PATH = path.join(__dirname, '..', 'conf.json');
+    MODULE_NAME = "electron-API";    // Does not have to be the same as parent folder
+
+    //// Constructor trace, please leave commented, unless necessary.
+    // constructor(window, tab) { super(window, tab); }
+
+    // Setup code here. This function is called in BaseModule's constructor.
+    setup()
 	{
 		ipcMain.handle('select-file', async () => await this.selectFile());
 		ipcMain.handle('read-file', async (event, path) => await this.readFile(path));
@@ -13,10 +20,6 @@ class FileAccessSetup
 		
 		app.commandLine.appendSwitch('touch-events', 'enabled');
 		// app.commandLine.appendSwitch('enable-pointer-events');
-	}
-	async selectFile()
-	{
-
 	}
 
 	async readFile(path)
@@ -39,7 +42,6 @@ class FileAccessSetup
 			return null;
 		}
 	}
-
 }
 
-module.exports = FileAccessSetup;
+module.exports = ElectronAPI;

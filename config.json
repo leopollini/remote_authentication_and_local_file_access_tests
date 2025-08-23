@@ -7,9 +7,7 @@
     "version": "0.0.1",
     "autoupdate": false,
 
-    "main_scripts_dir": "modules_enabled",
-    "preload_scripts_dir": "preload_enabled",
-    "scripts_lib_dir": "modules_disabled",
+    "scripts_lib_dir": "modules",
     "electron_package": "package.json",
     "log":
     {
