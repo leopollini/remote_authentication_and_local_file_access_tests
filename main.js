@@ -4,8 +4,6 @@ const {app, BrowserWindow, globalShortcut, WebContentsView, BaseWindow, screen, 
 const url = require('url');
 const fs = require('fs');
 const Env = require('./env');
-const BaseModule = require('./modules/BaseModule');
-const { constrainedMemory } = require('process');
 
 const LOAD_DIR = path.join(__dirname, 'modules');
 const PAGE_URL = url.format({
@@ -59,29 +57,12 @@ async function createMainWindow()
 					if (Env.DEBUG_MODE)
 						console.log("loading", dir);
 					const ModuleClass = require(setup_file);
-					const t = new BaseModule();
-					Object.assign(t, ModuleClass);
-					t.__start(mainWindow, mainTab);
-					console.log(t);
+					(new ModuleClass()).__start(mainWindow, mainTab);
 				}
 			}
 		}
 	});
 
-
-	// class BaseLel
-	// {
-	// 	constructor(o)
-	// 	{
-	// 		console.log(o);
-	// 		Object.assign(this, o);
-	// 		console.log(this);
-	// 		this.addAsd();
-	// 	}
-	// }
-	// contents = require('./testscript');
-	// console.log(contents);
-	// new BaseLel(contents);
 
 	// globalShortcut.register('f12', () => {
 	mainTab.webContents.toggleDevTools(); // }
