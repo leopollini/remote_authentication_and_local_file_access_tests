@@ -4,8 +4,10 @@ const {app, WebContentsView, BaseWindow, screen } = require('electron');
 const url = require('url');
 const fs = require('fs');
 const Env = require('./env');
+const pc = require('./PackageCreator');
 
-const LOAD_DIR = path.join(__dirname, 'modules');
+const DATA_FILE_PATH = path.join(__dirname, 'data.json');
+const LOAD_DIR = path.join(__dirname, 'extensions_main');
 const PAGE_URL = url.format({
 		pathname: path.join(__dirname, "index.html"),
 		// pathname: path.join("reception.parchotels.it"),
@@ -17,13 +19,24 @@ const enabled_modules = [];
 
 async function createMainWindow()
 {
-	// new FileAccessSetup();
-	const { height, width } = screen.getPrimaryDisplay().workAreaSize;
+	// During first execution create all config files
+	app.conf = {};
+	app.data = {};
+	try {app.conf = JSON.parse(fs.readFileSync(pc.CONF_FILE_PATH));}
+	catch {console.log('Could not load config file');}
+	try {app.data = JSON.parse(fs.readFileSync(DATA_FILE_PATH));}
+	catch {console.log('Could not load data file');}
+	if (!app.data.is_configured) new pc(app.conf);
+
+	const {height, width} = screen.getPrimaryDisplay().workAreaSize;
+	app.displaySize = {height: height, width: width}
 	const mainWindow = new BaseWindow({
 		tabbingIdentifier: "myTabs",
 		title: "Electron",
-		width: width / 2,
-		height: height / 2
+		// width: width / 2,
+		// height: height / 2,
+		fullscreenable: true,
+		autoHideMenuBar: true
 	});
 	const mainTab = new WebContentsView({
 		webPreferences: {
@@ -42,44 +55,33 @@ async function createMainWindow()
 
 
 	// Loads all active modules preload
-	fs.readdirSync(LOAD_DIR).forEach(function (dir)
+	fs.readdirSync(LOAD_DIR).forEach(function (ext)
 	{
-		const fullpath = path.join(LOAD_DIR, dir);
-		const stat = fs.statSync(fullpath);
-		if (stat.isDirectory())
+		const fullpath = path.join(LOAD_DIR, ext);
+		
+		if (Env.DEBUG_MODE)
+			console.log("loading", ext);
+		try
 		{
-			const main_path = path.join(fullpath, 'main');
-			const main_stat = fs.statSync(main_path);
-			const setup_file = path.join(main_path, 'setup.js');
-			if (main_stat.isDirectory() && fs.existsSync(setup_file))
-			{
-				if (Env.DEBUG_MODE)
-					console.log("loading", dir);
-				try
-				{
-					const ModuleClass = require(setup_file);
-					const t = new ModuleClass()
-					enabled_modules.push(t);
-					t.__start(mainWindow, mainTab);
-				}
-				catch (e)
-				{ 
-					console.log("Module not loaded:", e.message);
-				}
-			}
+			const ModuleClass = require(fullpath);
+			const t = new ModuleClass()
+			enabled_modules.push(t);
+			t.__start(mainWindow, mainTab);
+		}
+		catch (e)
+		{ 
+			console.log("Module not loaded:", e.message);
 		}
 	});
 
 
-	// globalShortcut.register('f12', () => {
-	mainTab.webContents.toggleDevTools(); // }
+	mainTab.webContents.toggleDevTools();
 
 	if (Env.DEBUG_MODE)
 	{
 		console.log('CHECKING ACTIVE MODULES:');
 		checkActiveModules();
 	}
-
 	// mainWindow.maximize();
 }
 
@@ -91,4 +93,4 @@ function checkActiveModules()
 	});
 }
 
-app.whenReady().then(createMainWindow);
+app.on('ready', createMainWindow);

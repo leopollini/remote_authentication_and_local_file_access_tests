@@ -1,8 +1,8 @@
 directories:
   output: dist
   buildResources: build
-appId: key_access_test
-productName: key_access_test
+appId: Webpage_Accessor
+productName: Webpage_Accessor
 linux:
   target:
     - deb

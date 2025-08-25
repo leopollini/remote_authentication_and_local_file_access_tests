@@ -1,86 +1,108 @@
 {
-    "author":
-    {
-        "name": "Leonardo Pollini",
-        "email": "leopollinik@gmail.com"
-    },
-    "version": "0.0.1",
-    "autoupdate": false,
+	"app_info":
+	{
+		"author":
+		{
+			"name": "Leonardo Pollini",
+			"email": "leopollinik@gmail.com"
+		},
+		"version": "0.0.1",
+		"autoupdate": false,
 
-    "scripts_lib_dir": "modules",
-    "electron_package": "package.json",
-    "log":
-    {
-        "log_level": "WARNING",
-        "log_file": "log.log",
-        "actions":
-        {
-            "theese are just some examples": "I cannot use comments in json :(",
-            "send_mail": {},
-            "end_session": {}
-        }
-    },
+		"electron_package": "package.json"
+	},
 
-    "keyboard_config":
-    {
-        "enabled": false,
-        "whitelist": false,
-        "blacklist": [],
-        "module": "keyboard-config"
-    },
-    "mouse_config": false,
-    "touchscreen_config":
-    {
-        "enabled": true,
-        "remap_to_pointeraction": true,
-        "actions":
-        {
-            "enlarged_doubleclick":
-            {
-                "enabled": true,
-                "doubleclick_radius": 20,
-                "doubleclick_max_delay": 0.5,
-                "module": "double-click",
-                "APIevents": {"dblclick": {}}
-            },
-            "long_press":
-            {
-                "enabled": true,
-                "time_delay": 0.5,
-                "module": "long-press",
-                "APIevents": {"pointerdown": {}, "contextmenu": {}}
-            }
-        }
-    },
+	"log":
+	{
+		"log_level": "WARNING",
+		"log_file": "log.log",
+		"actions":
+		{
+			"theese are just some examples": "I cannot use comments in json :(",
+			"send_mail": {},
+			"end_session": {}
+		}
+	},
 
-    "fullscreen": true,
-    "autostart": true,
-    "autorestart": true,
-    "autoreload": false,
-    "start_script":
-    {
-        "enabled": true,
-        "scripts": []
-    },
+	"configuration":
+	{
+		"conf_files_dir": "extensions_conf",
+		"keyboard_config":
+		{
+			"enabled": false,
+			"whitelist": false,
+			"blacklist": [],
+			"extension": "keyboard-config"
+		},
+		"mouse_config": {},
+		"touchscreen_config":
+		{
+			"enabled": true,
+			"remap_to_pointeraction": true,
+			"actions":
+			{
+				"enlarged_doubleclick":
+				{
+					"enabled": true,
+					"doubleclick_sqr_radius": 1600,
+					"doubleclick_max_delay": 500,
+					"actions":
+					{
+						"lel": {"enabled": true, "extension": "double-click"}
+					},
+					"APIevents": {"dblclick": {}}
+				},
+				"long_press":
+				{
+					"enabled": true,
+					"time_delay": 500,
+					"extension": "long-press",
+					"APIevents": {"pointerdown": {}, "contextmenu": {}}
+				}
+			}
+		},
+		"other_actions":
+		{
+			"actions":
+			{
+				"toolbar":
+				{
+					"enabled": false,
+					"hidden": false,
+					"extension": "toolbar"
+				},
+				"electron-api":
+				{
+					"enabled": true,
+					"extension": "electronAPI"
+				},
+				"extra_extensions":
+				{
+					"extension": "window-events"
+				},
+				"startup_actions": {}
+			}
+		}
+	},
 
-    "toolbar":
-    {
-        "enabled": false,
-        "hidden": false,
-        "module": "toolbar"
-    },
-    "only_one_webpage": true,
-    "allow_navigation": true,
-
-    "electron-api":
-    {
-        "enabled": true,
-        "module": "electronAPI"
-    },
-    "extra_scripts":
-    {
-        "preload_scripts": [],
-        "module": "window-events"
-    },
-    "startup_actions": []
+	"default_data":
+	{
+		"fullscreen": true,
+		"autostart": true,
+		"autorestart": true,
+		"autoreload": false,
+		"only_one_webpage": true,
+		"allow_navigation": true,
+		"webpages":
+		[
+			{   
+				"address": "index.html",
+				"protocol": "file",
+				"is_main_page": true,
+				"require_private_window": true
+			}
+		],
+		"terminal_id": 381273,
+		"terminal_key": "asdasdasd"
+	}
 }

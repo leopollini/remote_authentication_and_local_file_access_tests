@@ -1,5 +1,5 @@
 {
-	"name": "key_access_test",
+	"name": "Webpage_Accessor",
 	"version": "1.0.0",
 	"description": "Electron tests for independant desktop web app",
 	"author": {
@@ -14,8 +14,8 @@
 		"build": "electron-builder"
 	},
 	"build": {
-		"appId": "key_access_test",
-		"productName": "key_access_test",
+		"appId": "Webpage_Accessor",
+		"productName": "Webpage_Accessor",
 		"linux": {
 			"target": [
 				"deb"
