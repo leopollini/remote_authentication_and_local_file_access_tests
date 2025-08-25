@@ -26,20 +26,14 @@ class BaseModule
 			return ;
 		}
 		
-		this.log('Setting up', this.module_name, "'config:", this.__conf, '...');
-		// try
-		{
-			this.setup();
-			this.is_active = true;
-			console.log('done');
-		}
-		// catch (e)
-		// {
-		// 	console.log('Could not setup', this.module_name, ':', e.message);
-		// 	this.is_active = false;
-		// }
+		this.log('Setting up', this.module_name, 'config:', this.__conf, '...');
+
+		this.setup();
+		this.is_active = true;
+		console.log('... done');
 	}
 
+	// Colored log!
     log(...message)
 	{
 		if (Env.DEBUG_MODE) console.log('[', chalk.green(this.module_name), ']:', ...message);

@@ -17,22 +17,18 @@
         {
             "theese are just some examples": "I cannot use comments in json :(",
             "send_mail": {},
-            "close_terminal": {}
+            "end_session": {}
         }
     },
 
     "keyboard_config":
     {
-        "enabled": true,
+        "enabled": false,
         "whitelist": false,
         "blacklist": [],
-        "shortcuts":
-        {
-            "preload_scripts": [],
-            "main_scripts": []
-        }
+        "module": "keyboard-config"
     },
-    "mouse_config": true,
+    "mouse_config": false,
     "touchscreen_config":
     {
         "enabled": true,
@@ -44,14 +40,14 @@
                 "enabled": true,
                 "doubleclick_radius": 20,
                 "doubleclick_max_delay": 0.5,
-                "scripts_dir": "double-click",
+                "module": "double-click",
                 "APIevents": {"dblclick": {}}
             },
             "long_press":
             {
                 "enabled": true,
                 "time_delay": 0.5,
-                "scripts_dir": "long-press",
+                "module": "long-press",
                 "APIevents": {"pointerdown": {}, "contextmenu": {}}
             }
         }
@@ -71,7 +67,7 @@
     {
         "enabled": false,
         "hidden": false,
-        "main_scripts": []
+        "module": "toolbar"
     },
     "only_one_webpage": true,
     "allow_navigation": true,
@@ -79,12 +75,12 @@
     "electron-api":
     {
         "enabled": true,
-        "scripts_dir": "electronAPI"
+        "module": "electronAPI"
     },
     "extra_scripts":
     {
         "preload_scripts": [],
-        "scripts_dir": "window-events"
+        "module": "window-events"
     },
     "startup_actions": []
 }

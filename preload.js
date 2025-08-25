@@ -17,7 +17,14 @@ fs.readdirSync(LOAD_DIR).forEach(function (dir) {
 			const setup_file = path.join(preload_path, 'setup.js');
 			if (fs.existsSync(setup_file))
 			{
-				require(setup_file);
+				try
+				{
+					require(setup_file);
+				}
+				catch (e)
+				{
+					console.log('Module', dir, 'not loaded:', e.message);
+				}
 				if (Env.DEBUG_MODE)
 					console.log('preloaded', dir);
 			}

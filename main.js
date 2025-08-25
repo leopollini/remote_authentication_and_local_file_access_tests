@@ -1,6 +1,6 @@
 
 const path = require('path');
-const {app, BrowserWindow, globalShortcut, WebContentsView, BaseWindow, screen, contentTracing } = require('electron');
+const {app, WebContentsView, BaseWindow, screen } = require('electron');
 const url = require('url');
 const fs = require('fs');
 const Env = require('./env');
@@ -13,7 +13,7 @@ const PAGE_URL = url.format({
 		protocol: 'file'
 	});
 
-var enabled_modules = [];
+const enabled_modules = [];
 
 async function createMainWindow()
 {
@@ -30,8 +30,7 @@ async function createMainWindow()
 			preload: path.join(__dirname, 'preload.js'), // Secure bridge
 			contextIsolation: true,
 			nodeIntegration: false,
-		    experimentalFeatures: true,
-			sandbox: false,         // 🔑 disable sandbox so preload gets Node
+			sandbox: false
 		}});
 
 
@@ -51,24 +50,21 @@ async function createMainWindow()
 		{
 			const main_path = path.join(fullpath, 'main');
 			const main_stat = fs.statSync(main_path);
-			if (main_stat.isDirectory())
+			const setup_file = path.join(main_path, 'setup.js');
+			if (main_stat.isDirectory() && fs.existsSync(setup_file))
 			{
-				const setup_file = path.join(main_path, 'setup.js');
-				if (fs.existsSync(setup_file))
+				if (Env.DEBUG_MODE)
+					console.log("loading", dir);
+				try
 				{
-					if (Env.DEBUG_MODE)
-						console.log("loading", dir);
-					try
-					{
-						const ModuleClass = require(setup_file);
-						const t = new ModuleClass()
-						enabled_modules.push(t);
-						t.__start(mainWindow, mainTab);
-					}
-					catch (e)
-					{
-						console.log("Module not loaded:", e.message);
-					}
+					const ModuleClass = require(setup_file);
+					const t = new ModuleClass()
+					enabled_modules.push(t);
+					t.__start(mainWindow, mainTab);
+				}
+				catch (e)
+				{ 
+					console.log("Module not loaded:", e.message);
 				}
 			}
 		}
